@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Test method for Stream Example" tests="4" skipped="0" failures="0" errors="0" timestamp="2019-09-08T04:36:30" hostname="Ashiks-MacBook-Pro.local" time="0.006">
+  <properties/>
+  <testcase name="Check the size of the list of integers" classname="Test method for Stream Example" time="0.001"/>
+  <testcase name="Test if the 30 is removed from the list of integers" classname="Test method for Stream Example" time="0.001"/>
+  <testcase name="Test numbers divisible by 5 and 3 with square value" classname="Test method for Stream Example" time="0.001"/>
+  <testcase name="Test if the numbers with last digit 25 are removed from the list of integers" classname="Test method for Stream Example" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.questions.NumberServiceTest" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="Ashiks-MacBook-Pro.local" time="0.0">
+  <properties/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Sep. 08, 2019 2:36:30 PM org.junit.vintage.engine.discovery.DefensiveAllDefaultPossibilitiesBuilder$DefensiveAnnotatedBuilder buildRunner
+WARNING: Ignoring test class using JUnitPlatform runner: com.questions.NumberServiceTest
+Sep. 08, 2019 2:36:30 PM org.junit.vintage.engine.discovery.DefensiveAllDefaultPossibilitiesBuilder$DefensiveAnnotatedBuilder buildRunner
+WARNING: Ignoring test class using JUnitPlatform runner: com.questions.NumberServiceTest
+]]></system-err>
+</testsuite>

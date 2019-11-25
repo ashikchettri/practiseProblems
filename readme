@@ -1,0 +1,155 @@
+Stream is a interface used in java8. The most ovibious way to create a stream is from a collection.
+Bascially, collection method has 2 default methods on it from a collections.
+1)Stream() :- return a sequential stream with the collection as its source
+2)ParallelStream() :- returns a parallel stream with the collection as its source.
+
+
+Streaming Files:
+=> Now BufferedReader has a line method which returns a stream. Example
+
+    try(FileReader fr = new FileReader("file");
+    BufferedReader br = new BufferedReader(fr)){
+        br.lines().forEach(System.out::println);
+            }
+
+=> We can also read the a file as Stream using Files.lines(Path filePath); for example
+
+        try(Stream st = Files.lines(Path.get("file"))){
+        st.forEach(System.out::println);
+           }
+
+Streaming File Trees
+=====================
+There are several static methods on the Files class for navigating files trees using stream.
+
+1)list(Path dir) => Stream of files in a given directory
+2) Walk(Path dir) =>Stream that traverses the file tree depth-first starting at the given directory.
+3) Walk(Path dir,int maxDepth) => same as walk(dir) but with a maximum depth.
+
+Streaming Text Patterns
+========================
+The patterns class has a method, splitAsStream(charSequence), which creates a streams.
+Example:-
+            import java.util.regex.Pattern;
+            Pattern patt = Pattern.compile(",");
+            patt.splitAsStream("a,b,c")
+                    .forEach(System.out::println);
+
+                    output: a
+                            b
+                            c
+
+Infinite Stream
+================
+
+using GENERATE or ITERATE static method on stream , we can create a stream of values including never ending streams.
+
+=> Stream.generate(() -> new Dragon());
+=> Stream.generate(() -> Math.random());
+
+However, the java.util.Random class does this for us with following static methods:- ints(), longs(), doubles() .
+1) ints() -  infinite stream of random integers
+2) ints(int n,int m) -infinite stream of random integers from n(inclusive) to m(exclusive)
+3) ints(long size) - stream of given size of random integers
+4) ints(long size, int n, int m) - streams of given size of random integers with given bounds.
+
+==================
+ITERATE:- Iterate method is similar to generate but it takes an initial value and a function that modifies that value. Example
+
+        Sttream.iterate(l, i -> i + 1)
+                .forEach(System.out::print);
+
+==================
+Ranges:
+            IntStream.range(1, 11)
+                    .forEach(System.out::println);
+===================
+Streaming Anything:
+            We can create a stream of any number of elements or an arrays using the following 2 methods.
+
+            Stream<Integer> str = Stream.of(1,2,3,4);
+            Stream<Object> str = Arrays.asList(1,2,3,4);
+===================
+For Each:-
+        Most common thing we can do with stream is using a loop in a stream .
+        For getting the list of files in a directory we can do as below using forEach .
+
+        File.list(Paths.get("."))
+                .forEach(System.out::println);
+======================
+Map/Filter/Reduce:
+        Lambda expression and default methods allows us to implement map/filter/reduce in java8 .
+
+======================
+Parallel Array => using stream() and parallelStream()
+======================
+Peek:
+    You can peek into a stream to do some action without interrupting the stream .
+    For Example:- you could print out elements to debug code:
+
+    Files.list(Paths.get("."))
+                .map(Path::getFileName)
+                .peek(System.out::println)
+                .forEach(p -> doSomething(p));
+=====================
+Limit:
+        The limit(int n) method can be used to limit  a stream to the given number of elements . Example
+
+        Random rnd  = new Random();
+        rnd.ints().limit(10)
+                    .forEach(System.out::println);
+=======================
+Sort:
+        Stream has a sorted() method for sorting a stream. Like map,filter,peek it is also lazily executed.We should call a
+limiting operation like limit before calling sorted() on an infinite stream .
+Example:-
+=>        rnd.ints().limit(10).sorted().forEach(System.out::println);
+
+=>          Files.list(Paths.get("."))
+                    .map(Path::getFileName)     //still a path
+                    .map(Path::toString) //convert into string
+                    .filter(name -> name.endWith(".java"))
+                    .sorted()
+                    .limit(5)
+                    .forEach(System.out::println) ;
+=========================
+Collectors and Statistics:
+            A collector is used to combine the elements of a stream into one result.It consists of 3 things:
+            - supplier of an initial value
+            - an accumulator which adds to the initial value
+            - a combiner which combines two result into one.
+
+import static java.util.stream.Collectors.* ;
+
+1)Simple Collectors :- The simplest collectors to things like toList() and toCollection().
+
+Example:-  List<String> dragonlist = dragon.stream().map(Dragon::getName).collect(toList());
+            Stream<String> set = dragons.stream.map(Dragon::getName).collect(toCollection(TreeSet::new);
+
+===========================
+Joining: It combines the stream using a given delimiter.
+            Example:
+                        String names = dragons.stream()
+                                                .map(Dragon::getName)
+                                                .collect(joining(","));
+
+It will combine all the names into one string seperated by commas.
+============================
+Grouping and Partitioning:
+            The groupingBy collector groups elements based on  a function you provide.
+
+            //Grouping by first letter of name
+            List<Dragon> dragons  = getDragons();
+            Map<Character,List<Dragon>> map = dragons.stream()
+                                                      .collect(groupingBy(dragon -> dragon.getName().charAt(0))));
+
+Similarly, the partitioningBy method creates a map with a boolean key . Example : -
+
+        //GROUP BY Whether dragon is green or not
+        Map<Boolean,List<Dragon>> map = dragons.stream().collect(partitioningBy(Dragon::isGreen));
+
+
+
+
+
+
